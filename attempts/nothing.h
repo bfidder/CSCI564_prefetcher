@@ -6,11 +6,12 @@
 
 struct Request;
 
+#define N 2
+
 class Prefetcher {
 	private:
 	bool _ready;
 	Request _nextReq;
-
   public:
 	Prefetcher();
 	// should return true if a request is ready for this cycle
