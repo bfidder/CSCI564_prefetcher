@@ -21,11 +21,13 @@ prefetcher.o: prefetcher.C prefetcher.h mem-sim.h
 
 test: CPU.o cache.o main.o memQueue.o prefetcher.o
 	${CC} ${CCFLAGS} CPU.o cache.o main.o memQueue.o prefetcher.o -o cacheSim
-	rm -f requests1.txt requests2.txt requests3.txt requests4.txt
+	rm -f requests1.txt requests2.txt requests3.txt requests4.txt requests5.txt all.traces.out
 	./cacheSim grep.trace > requests1.txt
 	./cacheSim g++.trace > requests2.txt
 	./cacheSim ls.trace > requests3.txt
 	./cacheSim plamap.trace > requests4.txt
+	./cacheSim testgen.trace > requests5.txt
+	paste grep.trace.out g++.trace.out ls.trace.out plamap.trace.out testgen.trace.out > all.traces.out
 
 clean:
 	rm -f *.o cacheSim

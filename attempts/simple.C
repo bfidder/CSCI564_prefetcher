@@ -17,7 +17,7 @@ void Prefetcher::completeRequest(u_int32_t cycle) {
 }
 
 void Prefetcher::cpuRequest(Request req) {
-
+  printf("%u\t%i\n", req.addr, req.HitL1);
   if(!_ready && !req.HitL1) {
 		_nextReq.addr = req.addr + 16;
 		_ready = true;

@@ -42,6 +42,7 @@ void Prefetcher::completeRequest(u_int32_t cycle) {
 }
 
 void Prefetcher::cpuRequest(Request req) {
+  printf("%u\t%i\n", req.addr, req.HitL1);
   bool ready = !req.HitL1;
   for (int i = 0; i < N; ++i) {
     ready &= !_readys[i];
