@@ -21,8 +21,9 @@ bool Prefetcher::hasRequest(u_int32_t cycle) {
 Request Prefetcher::getRequest(u_int32_t cycle) {
   Request r = _nextReq;
   for (int i = 0; i < N; ++i) {
+    r.addr += 16;
     if(_readys[i]) {
-      r.addr += 16;
+      break;
     }
   }
 	return r;

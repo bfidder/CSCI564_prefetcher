@@ -6,7 +6,7 @@
 
 struct Request;
 
-#define N 6
+#define N 13
 
 class Prefetcher {
 	private:

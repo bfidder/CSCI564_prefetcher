@@ -6,12 +6,18 @@
 
 struct Request;
 
-#define N 6
+#define N 13
+#define STORE 100
 
 class Prefetcher {
 	private:
 	bool _readys[N];
+	bool _strider_ready;
 	Request _nextReq;
+
+	long long last_addrs[STORE];
+	bool last_hits[STORE];
+	short fifo;
 
   public:
 	Prefetcher();
@@ -23,6 +29,8 @@ class Prefetcher {
 
 	// this function is called whenever the last prefetcher request was successfully sent to the L2
 	void completeRequest(u_int32_t cycle);
+
+	long long findPattern();
 
 	/*
 	 * This function is called whenever the CPU references memory.

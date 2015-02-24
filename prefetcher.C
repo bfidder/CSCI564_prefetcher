@@ -6,6 +6,14 @@ Prefetcher::Prefetcher() {
   for (int i = 0; i < N; ++i) {
     _readys[i] = false;
   }
+
+  for (int i = 0; i < STORE; ++i) {
+    last_addrs[i] = 0;
+    last_hits[i] = false;
+  }
+
+  _strider_ready = false;
+  fifo = 0;
   // _ready = false;
 }
 
@@ -21,8 +29,9 @@ bool Prefetcher::hasRequest(u_int32_t cycle) {
 Request Prefetcher::getRequest(u_int32_t cycle) {
   Request r = _nextReq;
   for (int i = 0; i < N; ++i) {
+    r.addr += 16;
     if(_readys[i]) {
-      r.addr += 16;
+      break;
     }
   }
 	return r;
@@ -42,6 +51,9 @@ void Prefetcher::completeRequest(u_int32_t cycle) {
 }
 
 void Prefetcher::cpuRequest(Request req) {
+  last_addrs[fifo] = req.addr;
+  ++fifo;
+  if(fifo >= STORE) fifo = 0;
   printf("%u\t%i\n", req.addr, req.HitL1);
   bool ready = !req.HitL1;
   for (int i = 0; i < N; ++i) {
@@ -54,5 +66,11 @@ void Prefetcher::cpuRequest(Request req) {
       _readys[i] = true;
     }
 		// _ready = true;
-	}
+	} else {
+    long long prediction = findPattern();
+  }
+}
+
+long long Prefetcher::findPattern() {
+  return 0;
 }
